@@ -1,0 +1,36 @@
+heat_template_version: 2014-10-16
+description: >
+    OpenStack Administrator Course
+    One VM Example
+
+parameters:
+  network:
+      type: string
+      description: Network for VM
+      default: int-net
+  image:
+      type: string
+      description: Cirros Image for VM
+      default: cirros
+
+resources:
+  my_server:
+      type: OS::Nova::Server
+      properties:
+          flavor: m1.tiny
+          key_name: key1
+          networks:
+          - network: { get_param: network }
+          image: { get_param: image }
+          user_data: |
+              #!/bin/sh
+              echo "Instance started :)"
+          user_data_format: RAW
+
+outputs:
+    instance_name:
+        description: The name of VM
+        value: { get_attr: [my_server, name] }
+    private_ip:
+        description: The private IP of VM
+        value: { get_attr: [ my_server, first_address ] }
