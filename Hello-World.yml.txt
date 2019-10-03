@@ -25,7 +25,7 @@ resources:
           user_data: |
               #!/bin/sh
               echo "Instance started :)"
-          user_data_format: RAW
+              user_data_format: RAW
 
 outputs:
     instance_name:
